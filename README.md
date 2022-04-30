@@ -4,7 +4,7 @@
 
 开发一个简单的完整应用，涉及到python, 可视化（pygame, opencv)，go, grpc, shell等基础知识，锻炼一下实操能力，为后续的研发打下基础。
 
-![image-20220430212407893](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220430212407893.png)
+![image-20220430212407893](https://s2.loli.net/2022/04/30/wGQkuU5TC9t8P2i.png)
 
 ##### 1. 整体应用的效果
 
