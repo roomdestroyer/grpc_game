@@ -48,7 +48,122 @@
 
 ### 二、快速使用
 
+#### 环境
+
+本项目环境为 Windows11，软件版本如下：
+
+~~~
+Python 3.9.12
+go version go1.18.1 windows/amd64
+~~~
 
 
 
+#### 目录
+
+本项目主体文件目录如下：
+
+~~~
+├── examples
+    ├── greeter_client            // python 客户端
+    │   ├── greeter_client.py         // 客户端主程序
+    │   ├── helloworld_pb2.py         // python 编译后的 proto 文件
+    │   ├── helloworld_pb2_grpc.py    // python 编译后的 proto 文件
+    │   ├── sunset.jpg                // 待操作的图片
+    │   ├── background.png            // 背景图片
+    ├── greeter_server            // go 服务端
+    │   ├── main.go                   // 服务端主程序
+    ├── helloworld                // 存放 proto 文件及 go 编译后的文件
+    │   ├── helloworld.proto          // proto 文件
+    │   ├── helloworld.pb.go          // go 编译后的 proto 文件
+    │   ├── helloworld_grpc.pb.go     // go 编译后的 proto 文件
+    ├── redis                      // go 通过 redis 获取的图片
+    │   ├── sub_img_0.jpg
+    │   ├── ......
+    │   ├── sub_img_99.jpg
+    ├── subimages                  // python 分割为 100 份后的图片
+    │   ├── sub_img_0.jpg
+    │   ├── ......
+    │   ├── sub_img_99.jpg
+    ├──────────────────────
+~~~
+
+> 注：本项目父目录中的文件皆不能删除，含 go 运行所必要的环境，除非你有能力自己配置它们
+
+
+
+#### 下载
+
+使用下列命令将文件下载到本地：
+
+~~~
+git clone https://github.com/roomdestroyer/grpc_game.git
+~~~
+
+假设你的工作路径为 `D:\00000`，下一步打开主目录文件：
+
+~~~
+cd D:\00000\grpc-go\examples\helloworld
+~~~
+
+下载 go 依赖：
+
+~~~
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+~~~
+
+下载 python 依赖：
+
+> 运行过程中缺什么就用 pip 下什么
+
+下载 redis：
+
+进入官网 `https://github.com/MicrosoftArchive/redis/releases`，选择 `.zip` 文件下载，下载好后解压到任意一个目录，解压后可以看到服务、客户端等，选择服务**redis-server.exe**双击开启：
+
+![image-20220430223942725](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220430223942725.png)
+
+
+
+#### 编译
+
+通过 go 编译 proto 文件：
+
+~~~
+protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative helloworld/helloworld.proto
+~~~
+
+通过 python3 编译 proto 文件：
+
+~~~
+python3 -m grpc_tools.protoc -I./helloworld --python_out=. --grpc_python_out=. helloworld/helloworld.proto
+~~~
+
+编译好的文件需将其手动移动到 `./greeter_client` 下。
+
+
+
+#### 运行
+
+启动两个 windows shell，其中一个运行服务端，另一个运行客户端。
+
+首先进入工作目录：
+
+~~~
+cd D:\00000\grpc-go\examples\helloworld
+~~~
+
+Shell1 运行服务端：
+
+~~~
+go run greeter_server/main.go
+~~~
+
+Shell2 运行客户端：
+
+~~~
+python3 greeter_client/greeter_client.py
+~~~
+
+当然也可以使用 pycharm 运行客户端，运行成功后显示一个窗口，通过该窗口即可完成特定的功能。
 
